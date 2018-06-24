@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+ <head>
+  <TITLE> New Document </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+ </head>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+ <script type="text/javascript" src="https://onlyoffice.nexterp.in/web-apps/apps/api/documents/api.js"></script>
+ <script>
+ var docconfig = null;
+ var sheetconfig = null;
+ var pptconfig = null;
+
+	function makeDocKey(){
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		for( var i=0; i < 5; i++ ){
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+		return text;
+	}
+
+	var onDocumentStateChange = function (event) {
+		if (event.data) {
+			console.log(event.data);
+			console.log("The document changed");
+		} else {
+			console.log("Changes are collected on document editing service");
+		}
+	};
+
+	$(document).ready(function(){
+		docconfig = {
+		    type:'mobile',
+			documentType: 'text',
+			document: {
+				fileType: 'docx',
+				key: makeDocKey(),
+				//key: "thiyagu",
+				title: 'Untitled document',
+				url: 'http://d34h5de3fkci09.cloudfront.net/166/data/39cf90a6-3fed-48fb-b9c0-5466d3d3c151/29c251ab-2ecc-48ac-a3e3-72e691d48af9.app',
+				//url: 'https://onlyoffice.nexterp.in/cache/files/gHgBfbgBXf_2691/output.docx/output.docx?md5=TKS-xewZDc7Yi6arKhvdZQ==&expires=1492444892&disposition=attachment&ooname=output.docx',
+				//url: 'https://d2buofcyv3eb8u.cloudfront.net/113393/data/asset/3b604786-8b0f-4817-bf91-96ed075d86d8.app?UID=39727&BID=113393&TSTAMP=1476085208686&fileType=content&Expires=1476087008&Signature=DGzBU-9sZM-hKkrDGaPbFf09DILRwzc7QWStXr0zi7HkN1hswAa2e5Yp8whsibKJjZFm2xkT3jO4X4yuonrbO2ezG97K173-a7vHsT~e7oJs3yfBcxG1BXdX6jcph7zSJJ4VFWqJa-sW-UEqCQmqIf3fTO8p~pjRtTC4lfu-HBf~iJnn1YptHa3MCuLCqTAIns2pX8lQnL3Mf2uclf9N-XXa3GnAKvRwKIBV-vDkoyN-Hg8IQzC0Yv6AKF7wGWJ~qPuZnbh3Q3~85oVTprYBHBLpP1j~9zC1PA~LV0JYIIsQNNtcebuhyN4HKAvyD1DBNXuAjXSRev3-ALOPaLMiJQ__&Key-Pair-Id=APKAIZM7FJKJ5DBTT5NA',
+				permissions: {
+					download: false,
+					edit: false,
+				},
+			},
+			editorConfig: {
+			//	callbackUrl: "http://192.168.14.226:8090/NextERP/nerp/data/saveDocFile?" +
+			   //   			"syllabusNodeId=2&isCustomSyllabusNode=0"+
+				//			"&classId=2&sectionId=3",
+				//createUrl: 'http://next-hyd-2651.nexteducation.com:8090/NextERP/nerp/data/saveDocFile',
+				//lang: 'en-US',
+		        //mode: 'edit',
+			canCoAuthoring: true,
+				user: {
+					id: "3453455",
+					firstname: 'Johny',
+				},
+			//	customization: {
+			//		logo: {
+			//			image: 'http://nexterp.in/images/tabsarrow.png',
+			//			imageEmbedded: 'http://nexterp.in/images/tabsarrow.png',
+			//			url: 'http://nexterp.in',
+			//		},
+			//	},
+			},
+			// events: {
+			//	'onDocumentStateChange': onDocumentStateChange,
+			//},
+		};
+
+		sheetconfig = {
+			documentType: 'spreadsheet',
+			document: {
+				fileType: 'xlsx',
+				key: makeDocKey(),
+				//title: 'Example Document Title.docx',
+				url: 'http://192.168.10.14/sample_onlyoffice_javaconverted.xlsx',
+			},
+			editorConfig: {
+				callbackUrl: 'http://next-hyd-2651.nexteducation.com:8083/NextWiki/nextwiki/wiki/saveDocFile',
+				//createUrl: 'http://192.168.10.14/sample_onlyoffice.docx',
+				//lang: 'en-US',
+		        //mode: 'edit',
+			},
+		};
+
+		pptconfig = {
+			documentType: 'presentation',
+			document: {
+				fileType: 'pptx',
+				key: makeDocKey(),
+				//title: 'Example Document Title.docx',
+				url: 'http://192.168.10.14/sample_onlyoffice_javaconverted.pptx',
+			},
+			editorConfig: {
+				callbackUrl: 'http://next-hyd-2651.nexteducation.com:8083/NextWiki/nextwiki/wiki/saveDocFile',
+				//createUrl: 'http://192.168.10.14/sample_onlyoffice.docx',
+				//lang: 'en-US',
+		        //mode: 'edit',
+			},
+		};
+ });
+ function showDoc(){
+	new DocsAPI.DocEditor('placeholder', docconfig);
+ }
+ function showSheet(){
+	new DocsAPI.DocEditor('placeholder1', sheetconfig);
+ }
+ function showPPT(){
+	new DocsAPI.DocEditor('placeholder2', pptconfig);
+ }
+ function closeDoc(){
+	$('#editorFrame').html("<div id='placeholder'></div>");
+ }
+ </script>
+ <body>
+ <a href="#" onclick="showDoc();">Doc</a>
+ <a href="#" onclick="showSheet();">Sheet</a>
+ <a href="#" onclick="showPPT();">PPT</a>
+ <a href="#" onclick="closeDoc();">Close</a>
+
+<div id="editorFrame"> <div id="placeholder"></div></div>
+  <div id="placeholder1"></div>
+   <div id="placeholder2"></div>
+ </body>
+</html>
